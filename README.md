@@ -18,3 +18,12 @@ LD_PRELOAD=./alloc_api.so ./test
 ```
 malloc,1730529137,0x555f5c03b2a0,1024 
 ```
+
+### 注意点
+① -fPICでフックAPIをコンパイルする
+```
+gcc -fPIC -shared -o alloc_api.so alloc_api.c
+```
+
+②フックAPI関数内のログ出力はfprintf(stderr, "~~")で記述
+* printf文にすると、mallocが無限に再帰的に使われるのでセグフォする
